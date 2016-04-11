@@ -28,7 +28,7 @@ is_skippable: false
 deps:
 run_if: ""
 inputs:
-  - api_key: ""
+  - api_key: "$TEST_FAIRY_API_KEY"
     opts:
       title: "TestFairy API key"
       summary: ""
@@ -36,8 +36,6 @@ inputs:
         API key from TestFairy.
         You can find your API key under the settings menu.
       is_required: true
-      is_expand: false
-      is_dont_change_value: false
   - apk_path: "$BITRISE_APK_PATH"
     opts:
       title: "APK path"
@@ -45,8 +43,6 @@ inputs:
       description: |-
         Path for the APK to upload to TestFairy.
       is_required: true
-      is_expand: true
-      is_dont_change_value: false
   - tester_groups: ""
     opts:
       title: "Tester groups"
@@ -54,9 +50,6 @@ inputs:
       description: |-
         Tester Groups that will be notified when the app is ready.
         Setup groups in your TestFairy account testers page.
-      is_required: false
-      is_expand: false
-      is_dont_change_value: false
   - notify: "off"
     opts:
       title: "Email notification"
@@ -64,9 +57,6 @@ inputs:
       description: |-
         Sets if should email testers about new version.
       value_options: ["on", "off"]
-      is_required: false
-      is_expand: false
-      is_dont_change_value: false
   - auto_update: "off"
     opts:
       title: "Auto update"
@@ -75,18 +65,12 @@ inputs:
         If auto update is on all users will be prompt to update
         to this build next time they run the app.
       value_options: ["on", "off"]
-      is_required: false
-      is_expand: false
-      is_dont_change_value: false
   - max_test_duration: "10m"
     opts:
       title: "Recording duration"
       summary: ""
       description: |-
         Maximum session recording length, eg 20m or 1h. Maximum 24h.
-      is_required: false
-      is_expand: false
-      is_dont_change_value: false
   - video_recording: "off"
     opts:
       title: "Video recording"
@@ -94,9 +78,6 @@ inputs:
       description: |-
         Sets if video recording is enabled for this build.
       value_options: ["on", "wifi", "off"]
-      is_required: false
-      is_expand: false
-      is_dont_change_value: false
   - icon_watermark: "off"
     opts:
       title: "Icon Watermark"
@@ -104,19 +85,13 @@ inputs:
       description: |-
         Sets Icon Watermark.
       value_options: ["on", "off"]
-      is_required: false
-      is_expand: false
-      is_dont_change_value: false
   - comment: ""
     opts:
       title: "Comments"
       summary: ""
       description: |-
         Comment text will be included in the email sent to testers.
-      is_required: false
-      is_expand: false
-      is_dont_change_value: false
-outputs: 
+outputs:
   - TESTFAIRY_PUBLIC_INSTALL_PAGE_URL_ANDROID:
     opts:
       title: Public Install Page URL
