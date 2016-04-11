@@ -1,0 +1,29 @@
+format_version: 1.1.0
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+app:
+  envs:
+  # define these in your .bitrise.secrets.yml
+  - api_key:
+  - BITRISE_APK_PATH:
+
+workflows:
+  test:
+    steps:
+    - path::./:
+        inputs:
+        - notify: "off"
+        - auto_update: "off"
+        - max_test_duration: "10m"
+        - video_recording: "off"
+        - comment: ""
+        - tester_groups: ""
+    - script:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            if [[ "$TESTFAIRY_PUBLIC_INSTALL_PAGE_URL_ANDROID" == "" ]] ; then
+              echo "No TESTFAIRY_PUBLIC_INSTALL_PAGE_URL_ANDROID env available!!"
+              exit 1
+            fi
+            echo "TESTFAIRY_PUBLIC_INSTALL_PAGE_URL_ANDROID: ${TESTFAIRY_PUBLIC_INSTALL_PAGE_URL_ANDROID}"
