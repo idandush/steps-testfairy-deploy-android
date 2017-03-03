@@ -16,6 +16,7 @@ workflows:
         - auto_update: "off"
         - max_test_duration: "10m"
         - video_recording: "off"
+        - inapp_bug_reporting: "on"
         - comment: ""
         - tester_groups: ""
     - script:

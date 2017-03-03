@@ -29,9 +29,17 @@ CURL=curl
 
 SERVER_ENDPOINT=http://app.testfairy.com
 
+ADVANCED_OPTIONS=""
+
 usage() {
 	echo "Usage: testfairy-upload-android.sh APK_FILENAME"
 	echo
+}
+
+generate_advanced_settings() {
+	if [ "$inapp_bug_reporting"=="on" ]; then
+	    ADVANCED_OPTIONS="shake"
+	fi
 }
 
 verify_settings() {
@@ -48,6 +56,7 @@ if [ $# -ne 1 ]; then
 fi
 
 # before even going on, make sure all tools work
+generate_advanced_settings
 verify_settings
 
 APK_FILENAME=$1
@@ -58,7 +67,7 @@ if [ ! -f "${APK_FILENAME}" ]; then
 fi
 
 /bin/echo -n "Uploading ${APK_FILENAME} to TestFairy.. "
-JSON=$( "${CURL}" -s ${SERVER_ENDPOINT}/api/upload -F api_key=${api_key} -F apk_file="@${APK_FILENAME}" -F icon-watermark="${ICON_WATERMARK}" -F testers-groups="${TESTER_GROUPS}" -F auto-update="${AUTO_UPDATE}" -F notify="${NOTIFY}" -F video="${VIDEO}" -F max-duration="${MAX_DURATION}" -F comment="${COMMENT}" -A "TestFairy Command Line Uploader ${UPLOADER_VERSION}" )
+JSON=$( "${CURL}" -s ${SERVER_ENDPOINT}/api/upload -F api_key=${api_key} -F apk_file="@${APK_FILENAME}" -F options="${ADVANCED_OPTIONS}" -F icon-watermark="${ICON_WATERMARK}" -F testers-groups="${TESTER_GROUPS}" -F auto-update="${AUTO_UPDATE}" -F notify="${NOTIFY}" -F video="${VIDEO}" -F max-duration="${MAX_DURATION}" -F comment="${COMMENT}" -A "TestFairy Command Line Uploader ${UPLOADER_VERSION}" )
 
 MESSAGE=$( echo ${JSON} | sed 's/\\\//\//g' | sed -n 's/.*"message"\s*:\s*"\([^"]*\)".*/\1/p' )
 URL=$( echo ${JSON} | sed 's/\\\//\//g' | sed -n 's/.*"build_url"\s*:\s*"\([^"]*\)".*/\1/p' )
